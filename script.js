@@ -4,7 +4,7 @@ const search_form = document.querySelector(".header_form");
 search_form.addEventListener("submit", (event) => {
   /* stop form from auto submiting on click */
   event.preventDefault();
-
+  alert("Form submitted");
   /* get the value of the form field */
   const value = document.querySelector("#search").value;
 
