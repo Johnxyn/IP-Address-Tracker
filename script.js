@@ -4,7 +4,6 @@ const search_form = document.querySelector(".header_form");
 search_form.addEventListener("submit", (event) => {
   /* stop form from auto submiting on click */
   event.preventDefault();
-  alert("Form submitted");
   /* get the value of the form field */
   const value = document.querySelector("#search").value;
 
@@ -20,7 +19,7 @@ async function search_Ip_Address(ip_address) {
       `https://geo.ipify.org/api/v2/country,city?apiKey=${api_key}&ipAddress=${ip_address}`
     );
 
-    if(!request.ok){
+    if (!request.ok) {
       throw new Error(`HTTP error: ${request.status} - ${request.statusText}`);
     }
 
@@ -36,7 +35,6 @@ async function search_Ip_Address(ip_address) {
       map.remove();
     }
     create_map(location.lat, location.lng, location.country, location.region);
-    
   } catch (err) {
     // Log error for debugging
     console.error(`Error occurred: ${err.message}`);
