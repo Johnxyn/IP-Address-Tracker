@@ -15,22 +15,33 @@ search_form.addEventListener("submit", (event) => {
 /* Search for an IpAddress */
 async function search_Ip_Address(ip_address) {
   const api_key = "at_b1AyHXsURuXnWIQ8Tl6NNawNn8VYP";
-  const request = await fetch(
-    `https://geo.ipify.org/api/v2/country,city?apiKey=${api_key}&ipAddress=${ip_address}`
-  );
-  const response = await request.json();
+  try {
+    const request = await fetch(
+      `https://geo.ipify.org/api/v2/country,city?apiKey=${api_key}&ipAddress=${ip_address}`
+    );
 
-  const { location, ip, isp } = response;
+    if(!request.ok){
+      throw new Error(`HTTP error: ${request.status} - ${request.statusText}`);
+    }
 
-  /* Update the ui on the page */
-  update_ui(ip, location.city, location.timezone, isp);
+    const response = await request.json();
+    const { location, ip, isp } = response;
 
-  /* Update the map on the page */
-  /* first remove all map instances if any */
-  if (map !== undefined && map !== null) {
-    map.remove();
+    /* Update the ui on the page */
+    update_ui(ip, location.city, location.timezone, isp);
+
+    /* Update the map on the page */
+    /* first remove all map instances if any */
+    if (map !== undefined && map !== null) {
+      map.remove();
+    }
+    create_map(location.lat, location.lng, location.country, location.region);
+    
+  } catch (err) {
+    alert(`Err: ${err.message}`);
+    console.error(err); // Logs the error in the console for debugging
+    return;
   }
-  create_map(location.lat, location.lng, location.country, location.region);
 }
 
 /* create the map */
