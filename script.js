@@ -38,9 +38,18 @@ async function search_Ip_Address(ip_address) {
     create_map(location.lat, location.lng, location.country, location.region);
     
   } catch (err) {
-    alert(`Err: ${err.message}`);
-    console.error(err); // Logs the error in the console for debugging
-    return;
+    // Log error for debugging
+    console.error(`Error occurred: ${err.message}`);
+
+    // Display alert
+    alert(`An error occurred: ${err.message}`);
+
+    // Optional: Render error message in UI
+    const errorElement = document.querySelector(".error-message");
+    errorElement.textContent = `An error occurred: ${err.message}`;
+    errorElement.style.display = "block";
+
+    return; // Stop further execution
   }
 }
 
